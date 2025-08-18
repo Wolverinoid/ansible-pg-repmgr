@@ -1,0 +1,7 @@
+{
+    "name": "file: tests/inventory",
+    "id": "r4.files.sec1.7.1",
+    "text_content": "FILE: tests/inventory\nDESCRIPTION: ",
+    "layer": "main",
+    "parent_id": "r4.files.sec1.7"
+}

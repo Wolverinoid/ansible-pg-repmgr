@@ -1,0 +1,7 @@
+{
+    "name": "image style: image_style_icon",
+    "id": "r4.files.sec3.2.2",
+    "text_content": "\nPROMPT: ui icon, flat style, black on white, <lora:icon1p1_xl:0.7> \nNEGATIVE PROMPT: bad quality",
+    "layer": "main",
+    "parent_id": "r4.files.sec3.2"
+}

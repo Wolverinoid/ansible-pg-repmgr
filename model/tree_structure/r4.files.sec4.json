@@ -1,0 +1,7 @@
+{
+    "name": "Additional utilities",
+    "id": "r4.files.sec4",
+    "text_content": "\nThe additional utilities are a set of tools that can be helpful in various situations when working with the project. They include scripts for generating documentation, running tests, or performing other tasks related to the project. These utilities should be written in Python and placed in the `utils` directory within the project repository.\n\nThe list of utilities see in subsections\n\n\n",
+    "layer": "main",
+    "parent_id": "r4.files"
+}

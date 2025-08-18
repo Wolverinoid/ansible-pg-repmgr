@@ -1,0 +1,7 @@
+{
+    "name": "image style: image_style_default",
+    "id": "r4.files.sec3.2.3",
+    "text_content": "PROMPT: cyberpunk, 8k\nNEGATIVE PROMPT: bad quality, corrupted text",
+    "layer": "main",
+    "parent_id": "r4.files.sec3.2"
+}

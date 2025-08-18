@@ -1,0 +1,7 @@
+{
+    "name": "file: vars/main.yml",
+    "id": "r4.files.sec1.6.1",
+    "text_content": "FILE: vars/main.yml\nDESCRIPTION: ",
+    "layer": "main",
+    "parent_id": "r4.files.sec1.6"
+}

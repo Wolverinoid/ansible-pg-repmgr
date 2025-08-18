@@ -1,0 +1,7 @@
+{
+    "name": "sketch.css",
+    "id": "r4.files.sec3.2.4",
+    "text_content": "\nFILE: resources/styles/sketch.css\nTYPE: CSS\nDESCRIPTION: This CSS file defines the styling for generating black on white sketch versions of elements, primarily used for creating wireframe masks. It ensures that all elements have a high contrast between their fill color and stroke color, allowing for easy identification during design iterations.\n\n\nfile contains style for following base object types (w/o class point): \n panel\n label\n textbox \n button\n\nand following class styles:\n .title                      \n .subtitle               \n .caption \n .comment\n\n\nwe need to define border style \nmargins, paddings\nfont and font-size\n\n\n\n\nINTERFACE: N/A\nPROMPT: Generate a CSS file with appropriate selectors and rules for creating a sketchy, black on white appearance.\nLINKS: r4.files.sec3.2.4\nUSES: N/A",
+    "layer": "main",
+    "parent_id": "r4.files.sec3.2"
+}

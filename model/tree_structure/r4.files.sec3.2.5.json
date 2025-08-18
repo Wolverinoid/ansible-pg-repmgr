@@ -1,0 +1,7 @@
+{
+    "name": "image style: image_style_ui",
+    "id": "r4.files.sec3.2.5",
+    "text_content": "PROMPT: abstract background, dark fancy modern futurstic (ui style:1.1) with  controls, textboxes. checkboxes, panels, toolpanel, progress bar in different states normal, hovered, clicked, (flat clean ui:1.2), almost black background, white and teal elements, yellow accents, white text <lora:SDXL_Black_Sa_May:1> <lora:slide1_xl:1> slide\nNEGATIVE PROMPT: ugly, blurry, scribble, chopped-off, bloom effect, (Wookiee), small sketches, (amateur), ((blurry:1.4)), bad quality, worse quality, jpg, compressed image, 3d\n\n\nNot used drafts for prompts:\n\nmodern ui interface, cyberpunk, 8k, cyberpunk 2077 colors <lora:SDXL_Black_Sa_May:1> <lora:slide1_xl:1> slide\n\n\nabstract background, dark fancy modern futurstic (ui style sheet:1.1) with  controls, textboxes. checkboxes, panels, toolpanel, progress bar in different states normal, hovered, clicked, (flat clean ui:1.2), almost black background, white and teal elements, yellow accents, white text <lora:SDXL_Black_Sa_May:1> cyberpunk wall geometric pattern decor <lora:slide1_xl:1> slide\n\nwatermark, wallpaper, ugly, blurry, scribble, chopped-off, bloom effect, (Wookiee), small sketches, (amateur), ((blurry:1.4)), bad quality, worse quality, jpg, compressed image, 3d",
+    "layer": "main",
+    "parent_id": "r4.files.sec3.2"
+}

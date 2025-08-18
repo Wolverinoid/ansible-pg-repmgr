@@ -1,0 +1,7 @@
+{
+    "name": "file: handlers/main.yml",
+    "id": "r4.files.sec1.3.1",
+    "text_content": "FILE: handlers/main.yml\nDESCRIPTION: ",
+    "layer": "main",
+    "parent_id": "r4.files.sec1.3"
+}

@@ -1,0 +1,7 @@
+{
+    "name": "main.css",
+    "id": "r4.files.sec3.2.1",
+    "text_content": "\nFILE: resources/styles/main.css\nTYPE: CSS\nDESCRIPTION: This file contains the main style definitions for the Graphical User Interface (GUI) in PySide6. It defines colors, fonts, sizes, and other visual elements that are used throughout the application.\n\nStyle should use modern fonts.\nDark background.\nFuturistic.\n\nElements: \n\ntitle\nbutton\npanel\ntextbox\n\nINTERFACE: none\nUSES: none",
+    "layer": "main",
+    "parent_id": "r4.files.sec3.2"
+}

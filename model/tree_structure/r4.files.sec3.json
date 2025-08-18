@@ -1,0 +1,7 @@
+{
+    "name": "Resources",
+    "id": "r4.files.sec3",
+    "text_content": "\nThe main folders in the /resources directory are:\n- /Data\n- /Images\n- /Styles\n\n### Images subfolders\n\n#### Background images (resources/Images/backgrounds)\nThese are the backgrounds for different pages or sections of your website. They should be named according to the section they're displayed on. For example, if there's a hero image at the top of the homepage, its file could be called `home_hero.jpg`.\n\n#### GUI textures\n\n\n### Styles\nCSS stylesheets go here. The main CSS file is usually called `main.css` but can vary depending on how the project is set up.\n\n### Data\nAny data files that are required by the application such as CSV, JSON, XML etc.",
+    "layer": "main",
+    "parent_id": "r4.files"
+}

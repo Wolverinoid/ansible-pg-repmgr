@@ -3,7 +3,7 @@
 #- import_tasks: install.yml
 
 # Configure PostgreSQL for replication
-#- import_tasks: postgresql_config.yml
+- import_tasks: postgresql_config.yml
 #
 # Configure repmgr
 - import_tasks: repmgr_config.yml
@@ -14,3 +14,7 @@
 #
 - import_tasks: standby_setup.yml
   when: pg_role == 'standby'
+
+# Database management (users and databases)
+- import_tasks: database_management.yml
+  when: pg_role == 'primary'

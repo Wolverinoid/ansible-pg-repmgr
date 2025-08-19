@@ -9,7 +9,6 @@
     state: present
   with_dict: "{{ postgresql_common_config_params }}"
   become: true
-  notify: restart postgresql
 
 - name: Configure primary-specific PostgreSQL parameters
   lineinfile:
@@ -19,7 +18,6 @@
     state: present
   with_dict: "{{ postgresql_primary_config_params }}"
   become: true
-  notify: restart postgresql
   when: pg_role == 'primary'
 
 - name: Configure standby-specific PostgreSQL parameters
@@ -30,7 +28,6 @@
     state: present
   with_dict: "{{ postgresql_standby_config_params }}"
   become: true
-  notify: restart postgresql
   when: pg_role == 'standby'
 
 - name: PostgreSQL | Update configuration - pg_hba.conf) 
@@ -40,13 +37,14 @@
     owner: "{{ postgresql_service_user }}"
     group: "{{ postgresql_service_group }}"
     mode: 0640
+  become: true
   register: postgresql_configuration_pt1
   notify: restart postgresql
 
 - name: Ensure PostgreSQL is running
   service:
     name: "{{ postgresql_service_name }}"
-    state: started
+    state: restarted
     enabled: yes
   become: true
 

@@ -1,5 +1,4 @@
 ---
-# handlers file for role_name---
 # handlers file for role_name
 
 - name: restart postgresql

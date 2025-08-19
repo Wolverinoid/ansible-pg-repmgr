@@ -9,6 +9,8 @@ postgresql_admin_user: "postgres"
 postgresql_service_user: "{{ postgresql_admin_user }}"
 postgresql_service_group: "{{ postgresql_admin_user }}"
 postgresql_service_enabled: true
+postgresql_default_auth_method_hosts: "md5"
+postgresql_default_auth_method: "peer"
 
 
 # PostgreSQL configuration
@@ -51,17 +53,23 @@ postgresql_primary_config_params: []
 postgresql_standby_config_params:
   hot_standby_feedback: false
  
-postgresql_default_auth_method: "peer"
-postgresql_default_auth_method_hosts: "md5"
+
  
  # pg_hba.conf
 postgresql_pg_hba_default:
-   - { type: local, database: all, user: all, address: "",             method: "{{ postgresql_default_auth_method }}", comment: '"local" is for Unix domain socket connections only' }
-   - { type: host,  database: all, user: all, address: "127.0.0.1/32", method: "{{ postgresql_default_auth_method_hosts }}", comment: "IPv4 local connections:" }
-   - { type: host,  database: all, user: all, address: "::1/128",      method: "{{ postgresql_default_auth_method_hosts }}", comment: "IPv6 local connections:" }
-   - { type: local, database: all, user: "{{ postgresql_admin_user }}", address: "", method: "peer map=root_as_{{ postgresql_admin_user }}", comment: "Local root Unix user, passwordless access" }
+    - { type: host, database: all, user: "{{ postgresql_admin_user }}", address: "127.0.0.1/32", method: "trust", comment: "Local root Unix user, passwordless access" }
+    - { type: host, database: all, user: "{{ postgresql_admin_user }}", address: "::1/128", method: "trust", comment: "Local root Unix user, passwordless access" }
+    - { type: local, database: all, user: all, address: "",             method: "{{ postgresql_default_auth_method }}", comment: '"local" is for Unix domain socket connections only' }
+    - { type: host,  database: all, user: all, address: "127.0.0.1/32", method: "{{ postgresql_default_auth_method_hosts }}", comment: "IPv4 local connections:" }
+    - { type: host,  database: all, user: all, address: "::1/128",      method: "{{ postgresql_default_auth_method_hosts }}", comment: "IPv6 local connections:" }
+    - { type: local, database: all, user: "{{ postgresql_admin_user }}", address: "", method: "peer map=root_as_{{ postgresql_admin_user }}", comment: "Local root Unix user, passwordless access" }
+        
+        
    
 postgresql_pg_hba_md5_hosts: []
 postgresql_pg_hba_passwd_hosts: []
 postgresql_pg_hba_trust_hosts: []
 postgresql_pg_hba_custom: []
+
+postgresql_users: []
+postgresql_databases: []

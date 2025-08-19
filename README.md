@@ -1,49 +1,20 @@
 # ansible-pg-repmgr
-# Ansible Role: role_name
-
-A brief description of the role goes here.
-
-## Requirements
-
-Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
-
-## Role Variables
-
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
-
-```yaml
-# defaults file for role_name
-postgresql_version: "16"  # PostgreSQL version to install
-```
-
-## Dependencies
-
-A list of other roles hosted on Galaxy should go here, plus any details in regards to parameters that may need to be set for other roles, or variables that are used from other roles.
-
-## Example Playbook
-
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
-
-```yaml
-- hosts: servers
-  roles:
-    - { role: username.role_name, postgresql_version: "15" }  # Override default PostgreSQL version
-```
-
-## License
-
-BSD
-
-## Author Information
-
-An optional section for the role authors to include contact information, or a website (HTML is not allowed).# Ansible Role: PostgreSQL with repmgr
 
 This Ansible role installs and configures PostgreSQL with repmgr for high availability without keepalived. It sets up streaming replication between PostgreSQL servers and configures automatic failover using repmgr.
+
+## Features
+
+- Installs PostgreSQL and repmgr packages
+- Configures streaming replication between PostgreSQL servers
+- Sets up automatic failover with repmgr
+- Supports both primary and standby node configurations
+- Works with PostgreSQL 12, 13, 14, 15, and 16
 
 ## Requirements
 
 - Debian/Ubuntu or RHEL/CentOS Linux
 - Ansible 2.9 or higher
+- Sudo access on target servers
 
 ## Role Variables
 
@@ -116,7 +87,7 @@ None.
     node_network_name: "192.168.1.101"
     primary_node_address: "192.168.1.101"
   roles:
-    - postgresql-repmgr
+    - ansible-pg-repmgr
 ```
 
 ### Standby Node Setup
@@ -130,7 +101,40 @@ None.
     node_network_name: "192.168.1.102"
     primary_node_address: "192.168.1.101"
   roles:
-    - postgresql-repmgr
+    - ansible-pg-repmgr
+```
+
+## Verification
+
+After deployment, you can verify the replication status:
+
+```bash
+# On primary node
+sudo -u postgres repmgr cluster show
+
+# Expected output
+ ID | Name  | Role    | Status    | Upstream | Location | Priority | Timeline | Connection string
+----+-------+---------+-----------+----------+----------+----------+----------+-------------------------------
+ 1  | node1 | primary | * running |          | default  | 100      | 1        | host=192.168.1.101 dbname=repmgr user=repmgr
+ 2  | node2 | standby |   running | node1    | default  | 100      | 1        | host=192.168.1.102 dbname=repmgr user=repmgr
+```
+
+## Failover Testing
+
+To test automatic failover, you can stop PostgreSQL on the primary node:
+
+```bash
+# On primary node
+sudo systemctl stop postgresql@16-main
+
+# After a few moments, check the cluster status on the standby node
+sudo -u postgres repmgr cluster show
+
+# Expected output - node2 has been promoted to primary
+ ID | Name  | Role    | Status    | Upstream | Location | Priority | Timeline | Connection string
+----+-------+---------+-----------+----------+----------+----------+----------+-------------------------------
+ 1  | node1 | primary | ? failed  |          | default  | 100      | 1        | host=192.168.1.101 dbname=repmgr user=repmgr
+ 2  | node2 | primary | * running |          | default  | 100      | 2        | host=192.168.1.102 dbname=repmgr user=repmgr
 ```
 
 ## License
@@ -139,4 +143,4 @@ MIT
 
 ## Author Information
 
-An optional section for the role authors to include contact information, or a website.
+This role was created by the DevOps team. For more information, please contact devops@example.com.

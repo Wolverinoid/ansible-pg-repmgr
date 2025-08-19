@@ -1,0 +1,7 @@
+{
+    "name": "file: tasks/standby_setup.yml",
+    "id": "r4.files.sec1.5.6",
+    "text_content": "FILE: tasks/standby_setup.yml\nDESCRIPTION: ",
+    "layer": "main",
+    "parent_id": "r4.files.sec1.5"
+}

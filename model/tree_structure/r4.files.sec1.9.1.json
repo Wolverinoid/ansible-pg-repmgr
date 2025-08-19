@@ -1,0 +1,7 @@
+{
+    "name": "file: templates/repmgr.conf.j2",
+    "id": "r4.files.sec1.9.1",
+    "text_content": "FILE: templates/repmgr.conf.j2\nDESCRIPTION: ",
+    "layer": "main",
+    "parent_id": "r4.files.sec1.9"
+}

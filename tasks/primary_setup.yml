@@ -1,0 +1,26 @@
+---
+# Configure primary node
+
+- name: Check if primary is already registered
+  shell: "repmgr -f {{ repmgr_config_file }} cluster show | grep -q 'primary'"
+  register: primary_check
+  ignore_errors: yes
+  become: true
+  become_user: postgres
+  changed_when: false
+
+- name: Register primary node
+  shell: "repmgr -f {{ repmgr_config_file }} primary register"
+  become: true
+  become_user: postgres
+  when: primary_check.rc != 0
+
+- name: Create replication slots for standby nodes
+  postgresql_slot:
+    name: "{{ item.name }}"
+    slot_type: physical
+    state: present
+  become: true
+  become_user: postgres
+  loop: "{{ standby_nodes | default([]) }}"
+  when: standby_nodes is defined

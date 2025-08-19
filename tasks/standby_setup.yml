@@ -1,0 +1,40 @@
+---
+# Configure standby node
+
+- name: Check if standby is already registered
+  shell: "repmgr -f {{ repmgr_config_file }} cluster show | grep -q {{ node_name }}"
+  register: standby_check
+  ignore_errors: yes
+  become: true
+  become_user: postgres
+  changed_when: false
+
+- name: Stop PostgreSQL service before clone
+  service:
+    name: "{{ postgresql_service_name }}"
+    state: stopped
+  become: true
+  when: standby_check.rc != 0
+
+- name: Clone primary node
+  shell: >
+    repmgr -h {{ primary_node_address }} -U {{ postgresql_replication_user }} -d {{ postgresql_replication_db }} 
+    -f {{ repmgr_config_file }} standby clone --force
+  become: true
+  become_user: postgres
+  when: standby_check.rc != 0
+  environment:
+    PGPASSWORD: "{{ postgresql_replication_password }}"
+
+- name: Start PostgreSQL service after clone
+  service:
+    name: "{{ postgresql_service_name }}"
+    state: started
+  become: true
+  when: standby_check.rc != 0
+
+- name: Register standby node
+  shell: "repmgr -f {{ repmgr_config_file }} standby register"
+  become: true
+  become_user: postgres
+  when: standby_check.rc != 0

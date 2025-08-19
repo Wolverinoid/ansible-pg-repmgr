@@ -1,0 +1,7 @@
+{
+    "name": "file: tasks/repmgr_config.yml",
+    "id": "r4.files.sec1.5.4",
+    "text_content": "FILE: tasks/repmgr_config.yml\nDESCRIPTION: ",
+    "layer": "main",
+    "parent_id": "r4.files.sec1.5"
+}

@@ -1,0 +1,33 @@
+# repmgr configuration file
+
+# Node information
+node_id={{ node_id }}
+node_name={{ node_name }}
+conninfo='host={{ node_network_name }} user={{ postgresql_replication_user }} dbname={{ postgresql_replication_db }} password={{ postgresql_replication_password }}'
+
+# Log settings
+log_file='{{ repmgr_log_file }}'
+log_level=INFO
+
+# PID file
+pid_file='{{ repmgr_pid_file }}'
+
+# PostgreSQL connection settings
+data_directory='{{ postgresql_data_dir }}'
+pg_bindir='{{ postgresql_bin_dir }}'
+
+# Failover settings
+failover=automatic
+promote_command='repmgr standby promote -f {{ repmgr_config_file }} --log-to-file'
+follow_command='repmgr standby follow -f {{ repmgr_config_file }} --log-to-file --upstream-node-id=%n'
+
+# Monitoring settings
+monitoring_history=yes
+monitor_interval_secs=2
+
+
+# Service control commands
+service_start_command='systemctl start {{ postgresql_service_name }}'
+service_stop_command='systemctl stop {{ postgresql_service_name }}'
+service_restart_command='systemctl restart {{ postgresql_service_name }}'
+service_reload_command='systemctl reload {{ postgresql_service_name }}'

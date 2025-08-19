@@ -1,2 +1,20 @@
 ---
+# handlers file for role_name---
 # handlers file for role_name
+
+- name: restart postgresql
+  service:
+    name: "{{ postgresql_service_name }}"
+    state: restarted
+  become: true
+
+- name: reload systemd
+  systemd:
+    daemon_reload: yes
+  become: true
+
+- name: restart repmgr
+  service:
+    name: repmgr
+    state: restarted
+  become: true

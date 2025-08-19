@@ -1,0 +1,76 @@
+---
+# Install PostgreSQL and repmgr
+
+- name: Update apt cache
+  apt:
+    update_cache: yes
+    cache_valid_time: 3600
+  become: true
+
+- name: Install required packages
+  apt:
+    name:
+      - curl
+      - gnupg
+      - ca-certificates
+    state: present
+  become: true
+
+- name: Create keyrings directory
+  file:
+    path: /etc/apt/keyrings
+    state: directory
+    mode: '0755'
+  become: true
+
+- name: Check if PostgreSQL repository key file exists
+  stat:
+    path: /etc/apt/keyrings/postgresql.gpg
+  register: postgresql_key_file
+  become: true
+
+- name: Import PostgreSQL repository key using direct keyserver approach
+  shell: |
+    curl -fsSL https://www.postgresql.org/media/keys/ACCC4CF8.asc | \
+    gpg --dearmor -o /etc/apt/keyrings/postgresql.gpg
+  become: true
+  when: not postgresql_key_file.stat.exists
+
+- name: Add PostgreSQL repository with correct signed-by option
+  apt_repository:
+    repo: "deb [signed-by=/etc/apt/keyrings/postgresql.gpg] http://apt.postgresql.org/pub/repos/apt {{ ansible_distribution_release }}-pgdg main"
+    state: present
+    filename: pgdg
+  become: true
+
+- name: Update apt cache after adding repository
+  apt:
+    update_cache: yes
+  become: true
+
+- name: Upgrade all packages
+  apt:
+    upgrade: yes
+  become: true
+
+- name: Install PostgreSQL and contrib packages
+  apt:
+    name:
+      - "postgresql-{{ postgresql_version }}"
+      - "postgresql-contrib-{{ postgresql_version }}"
+    state: present
+  become: true
+
+- name: Install repmgr for PostgreSQL
+  apt:
+    name: "postgresql-{{ postgresql_version }}-repmgr"
+    state: present
+  become: true
+
+- name: Install Python psycopg2 for Ansible PostgreSQL modules
+  apt:
+    name:
+      - python3-psycopg2
+      - python3-pip
+    state: present
+  become: true

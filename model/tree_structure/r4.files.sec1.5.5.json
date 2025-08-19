@@ -1,0 +1,7 @@
+{
+    "name": "file: tasks/primary_setup.yml",
+    "id": "r4.files.sec1.5.5",
+    "text_content": "FILE: tasks/primary_setup.yml\nDESCRIPTION: ",
+    "layer": "main",
+    "parent_id": "r4.files.sec1.5"
+}

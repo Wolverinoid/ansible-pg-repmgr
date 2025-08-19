@@ -1,0 +1,15 @@
+[Unit]
+Description=Repmgr Daemon for PostgreSQL
+After=network.target {{ postgresql_service_name }}.service
+Wants={{ postgresql_service_name }}.service
+
+[Service]
+Type=simple
+User=postgres
+Group=postgres
+ExecStart=/usr/bin/repmgrd -f {{ repmgr_config_file }} --daemonize=false
+ExecReload=/bin/kill -HUP $MAINPID
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target

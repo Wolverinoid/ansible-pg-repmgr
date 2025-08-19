@@ -1,0 +1,68 @@
+---
+# Configure PostgreSQL for replication
+
+- name: Configure common PostgreSQL parameters
+  lineinfile:
+    path: "{{ postgresql_config_dir }}/postgresql.conf"
+    regexp: '^#?{{ item.key }}\s*=\s*.*'
+    line: "{{ item.key }} = '{{ item.value }}'"
+    state: present
+  with_dict: "{{ postgresql_common_config_params }}"
+  become: true
+  notify: restart postgresql
+
+- name: Configure primary-specific PostgreSQL parameters
+  lineinfile:
+    path: "{{ postgresql_config_dir }}/postgresql.conf"
+    regexp: '^#?{{ item.key }}\s*=\s*.*'
+    line: "{{ item.key }} = '{{ item.value }}'"
+    state: present
+  with_dict: "{{ postgresql_primary_config_params }}"
+  become: true
+  notify: restart postgresql
+  when: pg_role == 'primary'
+
+- name: Configure standby-specific PostgreSQL parameters
+  lineinfile:
+    path: "{{ postgresql_config_dir }}/postgresql.conf"
+    regexp: '^#?{{ item.key }}\s*=\s*.*'
+    line: "{{ item.key }} = '{{ item.value }}'"
+    state: present
+  with_dict: "{{ postgresql_standby_config_params }}"
+  become: true
+  notify: restart postgresql
+  when: pg_role == 'standby'
+
+- name: PostgreSQL | Update configuration - pg_hba.conf) 
+  ansible.builtin.template:
+    src: pg_hba.conf.j2
+    dest: "{{ postgresql_conf_directory }}/pg_hba.conf"
+    owner: "{{ postgresql_service_user }}"
+    group: "{{ postgresql_service_group }}"
+    mode: 0640
+  register: postgresql_configuration_pt1
+  notify: restart postgresql
+
+- name: Ensure PostgreSQL is running
+  service:
+    name: "{{ postgresql_service_name }}"
+    state: started
+    enabled: yes
+  become: true
+
+- name: Create replication user
+  postgresql_user:
+    name: "{{ postgresql_replication_user }}"
+    password: "{{ postgresql_replication_password }}"
+    role_attr_flags: SUPERUSER,REPLICATION
+    state: present
+  become: true
+  become_user: postgres
+
+- name: Create replication database
+  postgresql_db:
+    name: "{{ postgresql_replication_db }}"
+    owner: "{{ postgresql_replication_user }}"
+    state: present
+  become: true
+  become_user: postgres

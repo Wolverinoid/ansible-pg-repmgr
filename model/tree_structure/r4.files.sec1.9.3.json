@@ -1,0 +1,7 @@
+{
+    "name": "file: templates/pg_hba.conf.j2",
+    "id": "r4.files.sec1.9.3",
+    "text_content": "FILE: templates/pg_hba.conf.j2\nDESCRIPTION: ",
+    "layer": "main",
+    "parent_id": "r4.files.sec1.9"
+}

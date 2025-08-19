@@ -68,6 +68,17 @@ cluster_name: "pg_cluster"
 primary_node_id: 1  # ID of the primary node
 primary_node_name: "node1"  # Name of the primary node
 primary_node_address: "192.168.1.101"  # IP of the primary node
+
+# PostgreSQL extensions
+postgresql_extensions: []  # List of extensions to install and create
+# Example:
+# postgresql_extensions:
+#   - name: "postgis"  # Extension name
+#     db: "gisdb"      # Database to create extension in
+#     schema: "public" # Optional schema
+#     package: "postgresql-16-postgis-3" # Optional custom package name (if specified, package will be installed)
+#   - name: "pg_stat_statements"  # Extension name only
+#     db: "postgres"    # Only create extension in database, no package installation
 ```
 
 ## Dependencies

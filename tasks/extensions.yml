@@ -1,0 +1,30 @@
+---
+# Install PostgreSQL extension packages
+- name: Install PostgreSQL extension packages
+  package:
+    name: "{{ item.package | default('postgresql-' + postgresql_version + '-' + item.name) }}"
+    state: present
+  with_items: "{{ postgresql_extensions }}"
+  when: 
+    - postgresql_extensions | length > 0
+    - item.package is defined
+  become: true
+  tags:
+    - postgresql
+    - extensions
+
+# Create PostgreSQL extensions in specified databases
+- name: Create PostgreSQL extensions
+  postgresql_ext:
+    name: "{{ item.name }}"
+    db: "{{ item.db }}"
+    schema: "{{ item.schema | default(omit) }}"
+    cascade: "{{ item.cascade | default(false) }}"
+    state: "{{ item.state | default('present') }}"
+  with_items: "{{ postgresql_extensions }}"
+  become: true
+  become_user: "{{ postgresql_admin_user }}"
+  when: postgresql_extensions | length > 0
+  tags:
+    - postgresql
+    - extensions

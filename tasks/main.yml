@@ -18,3 +18,7 @@
 # Database management (users and databases)
 - import_tasks: database_management.yml
   when: pg_role == 'primary'
+
+# Install and create PostgreSQL extensions
+- import_tasks: extensions.yml
+  when: pg_role == 'primary'

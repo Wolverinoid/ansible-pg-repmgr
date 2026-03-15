@@ -1,6 +1,6 @@
 ---
 # Install PostgreSQL and repmgr
-#- import_tasks: install.yml
+- import_tasks: install.yml
 
 # Configure PostgreSQL for replication
 - import_tasks: postgresql_config.yml
